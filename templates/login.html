@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Registration App</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #e8efff, #f8eaff);
+        }
+
+        .card {
+            width: 100%;
+            max-width: 420px;
+            padding: 35px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        h1 {
+            margin: 0 0 10px;
+            text-align: center;
+            color: #303b70;
+        }
+
+        .subtitle {
+            margin-bottom: 28px;
+            text-align: center;
+            color: #777;
+            font-size: 14px;
+        }
+
+        label {
+            display: block;
+            margin: 16px 0 7px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d5d8e5;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #5967d8;
+        }
+
+        .pass-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pass-box input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .show-btn {
+            padding: 10px;
+            border: none;
+            border-radius: 7px;
+            background: #eeeeff;
+            color: #454fc0;
+            cursor: pointer;
+        }
+
+        .login-btn {
+            width: 100%;
+            margin-top: 24px;
+            padding: 13px;
+            border: none;
+            border-radius: 8px;
+            background: #505fd0;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .login-btn:hover {
+            background: #3948b5;
+        }
+
+        .error {
+            padding: 11px;
+            border-radius: 7px;
+            background: #ffe8e8;
+            color: #b42318;
+            font-size: 14px;
+        }
+
+        .bottom {
+            margin-top: 22px;
+            text-align: center;
+            font-size: 14px;
+            color: #666;
+        }
+
+        a {
+            color: #505fd0;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <h1>Welcome Back</h1>
+        <p class="subtitle">Login to your account</p>
+
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+
+        <form method="POST" action="/login/">
+            {% csrf_token %}
+
+            <label for="username">Username or Email</label>
+            <input
+                type="text"
+                id="username"
+                name="username"
+                placeholder="Enter username or email"
+                autocomplete="username"
+                required
+            >
+
+            <label for="password">Password</label>
+
+            <div class="pass-box">
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button
+                    type="button"
+                    class="show-btn"
+                    onclick="showPass()"
+                    id="showBtn"
+                >
+                    Show
+                </button>
+            </div>
+
+            <button type="submit" class="login-btn">
+                Login
+            </button>
+        </form>
+
+        <p class="bottom">
+            Don't have an account?
+            <a href="/register/">Register here</a>
+        </p>
+
+        <p class="bottom">
+            <a href="/">Back to Home</a>
+        </p>
+    </div>
+
+    <script>
+        function showPass() {
+            const pass = document.getElementById("password");
+            const btn = document.getElementById("showBtn");
+
+            if (pass.type === "password") {
+                pass.type = "text";
+                btn.textContent = "Hide";
+            } else {
+                pass.type = "password";
+                btn.textContent = "Show";
+            }
+        }
+    </script>
+</body>
+</html>
